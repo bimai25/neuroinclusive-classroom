@@ -32,8 +32,6 @@ import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
 import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 
 // Dashboard components
-import Projects from "layouts/dashboard/components/Projects";
-import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
@@ -48,11 +46,11 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="dark"
                 icon="weekend"
-                title="Bookings"
-                count={281}
+                title="Attendance Rate"
+                count={92}
                 percentage={{
                   color: "success",
-                  amount: "+55%",
+                  amount: "5%",
                   label: "than lask week",
                 }}
               />
@@ -62,12 +60,12 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 icon="leaderboard"
-                title="Today's Users"
-                count="2,300"
+                title="Students"
+                count="30"
                 percentage={{
                   color: "success",
                   amount: "+3%",
-                  label: "than last month",
+                  label: "from last year",
                 }}
               />
             </MDBox>
@@ -77,12 +75,12 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="success"
                 icon="store"
-                title="Revenue"
-                count="34k"
+                title="Avg. Grade"
+                count="83%"
                 percentage={{
                   color: "success",
                   amount: "+1%",
-                  label: "than yesterday",
+                  label: "than last month",
                 }}
               />
             </MDBox>
@@ -92,8 +90,8 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="primary"
                 icon="person_add"
-                title="Followers"
-                count="+91"
+                title="Grade Increase"
+                count="+0.5%"
                 percentage={{
                   color: "success",
                   amount: "",
@@ -109,9 +107,9 @@ function Dashboard() {
               <MDBox mb={3}>
                 <ReportsBarChart
                   color="info"
-                  title="website views"
-                  description="Last Campaign Performance"
-                  date="campaign sent 2 days ago"
+                  title="Attendance"
+                  description="Attendance over past week"
+                  date="updated 2 days ago"
                   chart={reportsBarChartData}
                 />
               </MDBox>
@@ -120,13 +118,13 @@ function Dashboard() {
               <MDBox mb={3}>
                 <ReportsLineChart
                   color="success"
-                  title="daily sales"
+                  title="Avg Grades"
                   description={
                     <>
-                      (<strong>+15%</strong>) increase in today sales.
+                      (<strong>+6%</strong>) from Sep to Jan.
                     </>
                   }
-                  date="updated 4 min ago"
+                  date="updated 8 min ago"
                   chart={sales}
                 />
               </MDBox>
@@ -135,22 +133,12 @@ function Dashboard() {
               <MDBox mb={3}>
                 <ReportsLineChart
                   color="dark"
-                  title="completed tasks"
-                  description="Last Campaign Performance"
+                  title="Class GPA Performance"
+                  description="GPA over last 9 months"
                   date="just updated"
                   chart={tasks}
                 />
               </MDBox>
-            </Grid>
-          </Grid>
-        </MDBox>
-        <MDBox>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={8}>
-              <Projects />
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <OrdersOverview />
             </Grid>
           </Grid>
         </MDBox>

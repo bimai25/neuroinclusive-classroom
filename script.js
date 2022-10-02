@@ -130,7 +130,9 @@ function toTable(studentArray, tableID) {
     var headers = ["Name", "Grades", "Attendance", "Profile"];
     var table = $(tableID);
     table.innerHTML = "";
+    
     for (var i = 0; i < studentArray.length; i++) {
+    
         var row = table.insertRow(i);
         row.insertCell(0).innerHTML = studentArray[i].name;
         row.insertCell(1).innerHTML = studentArray[i].grades;
