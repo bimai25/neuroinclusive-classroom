@@ -1,0 +1,83 @@
+body {
+    font-family: sans-serif;
+}
+
+.hidden {
+    display: none;
+}
+
+#pullout_form {
+    position: absolute;
+    margin: auto;
+    max-width: 60%;
+    max-height: 50%;
+    padding: 20px;
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    opacity: 1;
+}
+
+.atten {
+    width: 5em;
+    height: 2em;
+}
+
+fieldset {
+    border-width: 2px;
+}
+
+legend {
+    text-align: center;
+    font-weight: bold;
+}
+
+input[type="text"] {
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+}
+
+#accomodations textarea {
+    width: 100%;
+    height: 50%;
+    resize: none;
+    margin-top: 3%;
+}
+
+#accomodations input {
+    width: 100%;
+}
+
+#studentList th {
+
+}
+#studentList tr {
+
+}
+
+#studentList {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-family: sans-serif;
+    min-width: 400px;
+
+    align-items: center;
+}
+
+button {
+    border-width: 0px;
+}
+
+.removal {
+    background-color: crimson;
+    color: white;
+}
+
+.edit {
+    background-color: darkblue;
+    color: white;
+}
