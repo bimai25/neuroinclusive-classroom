@@ -1,5 +1,11 @@
+@font-face {
+    font-family: 'Lemon Milk'
+    src: url('LEMONMILK-Regular.otf');
+}
+
 body {
     font-family: sans-serif;
+    background: linear-gradient(white, lightgray);
 }
 
 .hidden {
@@ -28,6 +34,9 @@ body {
 
 fieldset {
     border-width: 2px;
+    border-radius: 2px;
+    border-style: none;
+    background-color: white;
 }
 
 legend {
@@ -35,10 +44,12 @@ legend {
     font-weight: bold;
 }
 
-input[type="text"] {
+input[type="text"], input[type="number"] {
     border-top-style: hidden;
     border-right-style: hidden;
     border-left-style: hidden;
+    padding: 5px;
+    margin-bottom: 6px;
 }
 
 #accomodations textarea {
@@ -70,11 +81,26 @@ input[type="text"] {
 
 button {
     border-width: 0px;
+    border: 0px;
+    border-radius: 2px;
+    padding: 5px;
 }
 
 .removal {
     background-color: crimson;
     color: white;
+}
+
+section button, #submit {
+    background-color: green;
+    color: white;
+    padding: 6px;
+    margin: left;
+    border: 0px;
+}
+
+.moreInfo {
+    background-color: gainsboro;
 }
 
 .edit {
