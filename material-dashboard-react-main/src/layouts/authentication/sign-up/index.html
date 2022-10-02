@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <title>Teacher Portal</title>
+        <link rel="stylesheet" href="stylesheet.css">
+        <style type="text/css">
+            .hidden {
+                display: none;
+            }
+        </style>
+        <script src="script.js"></script>
+    </head> 
+    <body>
+        <header>
+
+        </header>
+        <section>
+            <button onclick="revealElement('pullout_form');">ADD</button>
+            <table id="studentList"></table>
+        </section>
+
+        <div class="hidden" id="pullout_form">
+            <form id="full_form">
+                <h1>Student Information</h1>
+                <input type="text" placeholder="Student Name" name="name" required><br>
+                <label for="grades">Grades</label>
+                <input type="range" min="0" max="100" value="0" name="grades"  oninput="rangeValue.innerText = this.value" required>
+                <p id="rangeValue">0</p>
+                <input type="text" placeholder="Attendance" name="attendance" required><br>
+
+                <label for="hasAccomodations">Accomodations?</label><br>
+                <input type="radio" id="yes" onclick="revealElement('accomodations');" name="yes" value="Yes">
+                <label for="yes">Yes</label><br>
+                <input type="radio" id="no" name="yes" value="no" onclick="hideElement('accomodations');">
+                <label for="yes">No</label><br><br>
+
+                <div id="accomodations" class="hidden">
+                    <input type="text" placeholder="List any neurodivergences." name="neurodivergences"><br>
+                    <textarea id="class_acc" placeholder="List all classroom accomodations delineated by line."></textarea><br>
+                    <textarea id="word_acc" placeholder="List all sensory (WORD) delineated by line."></textarea><br>
+                </div>
+
+                <button type="reset" class="submit" onclick="push();">Submit</button>
+                <button type="button" class="btn cancel" onclick="revealElement('pullout_form');">Cancel</button>
+            </form>
+        </div>
+        <div id="profiles"></div>
+    </body>
+</html>
