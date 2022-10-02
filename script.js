@@ -12,10 +12,6 @@ class Student {
         this.attendance = params[3];
         this.accomodations = params[4];
     }
-
-    getMetric() {
-        return /* numLines(accomodations[1]) + numLines(accomodations[2]) + */ (this.grades / 3) + (this.attendance / 3);
-    }
 }
 
 class Accomodations {
@@ -39,17 +35,30 @@ function $(id) {
 
 function weightedSort() {
     var metrics = new Array();
+    var resortedStudentDatabase = new Array();
+
     for (var i = 0; i < studentDatabase.length; i++) {
-        metrics.push([studentDatabase[i].getMetric(), studentDatabase[i].id]);
+        var studentMetric =  (100 - parseInt(studentDatabase[i].grades))/3;
+        if (studentDatabase[i].accomodations[1] !== undefined && studentDatabase[i].accomodations[2] !== undefined) {
+            studentMetric += numLines(studentDatabase[i].accomodations[1]) + numLines(studentDatabase[i].accomodations[2]);
+        }
+        metrics.push([studentMetric, studentDatabase[i].id]);
     }
     
     metrics.sort(function (element_a, element_b) {
-        return element_a[0] - element_b[0];
+        return element_b[0] - element_a[0];
     });
 
-    studentDatabase.sort(function (element_a, element_b) {
-        return studentDatabase.indexOf(element_a[1]) - studentDatabase.indexOf(element_b[1]);
-    });
+    for (var i = 0; i < metrics.length; i++) {
+        for (var j = 0; j < studentDatabase.length; j++) {
+            if (studentDatabase[j].id == metrics[i][1]) {
+                resortedStudentDatabase.push(studentDatabase[j]);
+            }
+        }
+    }
+
+    studentDatabase = resortedStudentDatabase;
+    console.log(studentDatabase);
 }
 
 function revealElement(id) {
@@ -81,7 +90,7 @@ function push() {
     studentNum++;
 
     studentDatabase.push(student);
-    // weightedSort();
+    weightedSort();
 
     toTable(studentDatabase, 'studentList');
 
@@ -135,7 +144,7 @@ function revealInfo(rowID) {
         
             <h4>Sensory Triggers</h4>
             <p id="sen_ls">` + sensories + `</p>
-            <button type="removal" onclick=$(`+ "'s" + rowID + "_profile'" + `).remove();>X</button>
+            <button class="removal" onclick=$(`+ "'s" + rowID + "_profile'" + `).remove();>X</button>
         </fieldset>
     `;
     
@@ -177,6 +186,12 @@ function edit(studentID) {
     form.submit.onclick = function() {
         push();
         removeStudent(studentID);
+        
+        form.submit.innerHTML = "Submit";
+
+        form.submit.onclick = function() {
+            push();
+        }
     }
 
     form.name.value = studentDatabase[rowID].name;
@@ -191,7 +206,7 @@ function edit(studentID) {
 
 function numLines(textvals) {
     var numLines = 0;
-    for (var i = 0; i < textvals.value.length; i++) {
+    for (var i = 0; i < textvals.length; i++) {
         if (textvals[i] === "\n") {
             numLines++;
         }
