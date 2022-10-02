@@ -13,8 +13,8 @@ class Student {
         this.accomodations = params[4];
     }
 
-    numParams() {
-        return 5;
+    getMetric() {
+        return /* numLines(accomodations[1]) + numLines(accomodations[2]) + */ (this.grades / 3) + (this.attendance / 3);
     }
 }
 
@@ -37,6 +37,21 @@ function $(id) {
     return document.getElementById(id);
 }
 
+function weightedSort() {
+    var metrics = new Array();
+    for (var i = 0; i < studentDatabase.length; i++) {
+        metrics.push([studentDatabase[i].getMetric(), studentDatabase[i].id]);
+    }
+    
+    metrics.sort(function (element_a, element_b) {
+        return element_a[0] - element_b[0];
+    });
+
+    studentDatabase.sort(function (element_a, element_b) {
+        return studentDatabase.indexOf(element_a[1]) - studentDatabase.indexOf(element_b[1]);
+    });
+}
+
 function revealElement(id) {
     const elem = $(id);
     if (elem.classList.contains("hidden")) {
@@ -57,7 +72,7 @@ function push() {
     
     var studentArray = Array.from(studentFormInfo);
     var studentAccomodations = new Array();
-    for (var i = 4; i < studentArray.length; i++) {
+    for (var i = 5; i < studentArray.length; i++) {
         studentAccomodations.push(studentArray[i][1]);
     }
 
@@ -66,16 +81,18 @@ function push() {
     studentNum++;
 
     studentDatabase.push(student);
-    console.log(studentDatabase);
+    // weightedSort();
 
     toTable(studentDatabase, 'studentList');
 
     hideElement("pullout_form");
     hideElement("accomodations");
+
+    document.getElementById("full_form").reset();
 }
 
 function toTable(studentArray, tableID) {
-    var headers = ["Name", "Grades", "Attendance", "Profile", "Remove Row"];
+    var headers = ["Name", "Grades", "Attendance", "Profile"];
     var table = $(tableID);
     table.innerHTML = "";
     for (var i = 0; i < studentArray.length; i++) {
@@ -111,12 +128,15 @@ function revealInfo(rowID) {
     }
 
     profile.innerHTML = `
-        <button type="removal" onclick=$(`+ "'s" + rowID + "_profile'" + `).remove();>X</button>
-        <h4>Accomodations</h4>
-        <p id="acc_ls">` + accomodations + `</p>
+        <fieldset class="profile">
+            <legend>` + studentDatabase[k].name + `'s Profile</legend>
+            <h4>Accomodations</h4>
+            <p id="acc_ls">` + accomodations + `</p>
         
-        <h4>Sensory Triggers</h4>
-        <p id="sen_ls">` + sensories + `</p>
+            <h4>Sensory Triggers</h4>
+            <p id="sen_ls">` + sensories + `</p>
+            <button type="removal" onclick=$(`+ "'s" + rowID + "_profile'" + `).remove();>X</button>
+        </fieldset>
     `;
     
     const profileContainer = $('profiles');
@@ -133,8 +153,48 @@ function removeStudent(studentID) {
             break;
         }
     }
+
+    if (studentDatabase.length == 0) {
+        $('studentList').innerHTML = "";
+    }
 }
 
 function edit(studentID) {
-    
+    revealElement("pullout_form");
+
+    var rowID = -1;
+    for (var k = 0; k < studentDatabase.length; k++) {
+        if (studentDatabase[k].id == studentID) {
+            rowID = k;
+            break;
+        }
+    }
+
+    const form = $("full_form");
+
+    form.submit.innerHTML = "Change";
+
+    form.submit.onclick = function() {
+        push();
+        removeStudent(studentID);
+    }
+
+    form.name.value = studentDatabase[rowID].name;
+    form.grade.value = studentDatabase[rowID].grades;
+    form.inschool.value = studentDatabase[rowID].attendance.substring(0, studentDatabase[rowID].attendance.indexOf("/"));
+    form.outofschool.value = studentDatabase[rowID].attendance.substring(studentDatabase[rowID].attendance.indexOf("/") + 1);
+
+    form.neurodivergences.value = studentDatabase[rowID].accomodations[0];
+    $("class_acc").innerHTML = studentDatabase[rowID].accomodations[1];
+    $("word_acc").innerHTML = studentDatabase[rowID].accomodations[2];
+}
+
+function numLines(textvals) {
+    var numLines = 0;
+    for (var i = 0; i < textvals.value.length; i++) {
+        if (textvals[i] === "\n") {
+            numLines++;
+        }
+    }
+    return numLines;
 }
